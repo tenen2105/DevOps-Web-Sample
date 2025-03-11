@@ -987,7 +987,7 @@ body {
 
     /* Adjust input fields */
     input, textarea {
-        background-color: #434242;
+        background-color: #333333;
         color: #ffffff;
         border: 1px solid #444;
     }
