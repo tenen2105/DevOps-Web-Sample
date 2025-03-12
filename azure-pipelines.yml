@@ -1,0 +1,11 @@
+trigger:
+  - main  # This runs the pipeline whenever changes are pushed to main
+
+pool:
+  name: Azure-VM-Pipeline  # Use your self-hosted agent
+
+steps:
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: '$(Build.SourcesDirectory)'  # Publish all HTML files
+      artifactName: 'html-site'
