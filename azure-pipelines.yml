@@ -7,5 +7,5 @@ pool:
 steps:
   - task: PublishBuildArtifacts@1
     inputs:
-      pathToPublish: '$(Build.SourcesDirectory)'  # Publish all HTML files
+      pathToPublish: '$(Build.SourcesDirectory)'  # Upload all HTML files
       artifactName: 'html-site'
