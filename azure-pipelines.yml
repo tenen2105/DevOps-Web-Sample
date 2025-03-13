@@ -19,7 +19,7 @@ steps:
   # Step 2: Publish the HTML site as an artifact
   - task: PublishBuildArtifacts@1
     inputs:
-      pathToPublish: '$(Build.SourcesDirectory)/'
+      pathToPublish: '$(Build.ArtifactStagingDirectory)/'
       artifactName: 'html-site'
 
   # Step 3: Copy the HTML files to the Azure VM (DEPLOYMENT)
