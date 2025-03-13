@@ -11,7 +11,7 @@ steps:
       IISDeploymentType: 'IISWebsite'
       ActionIISWebsite: 'CreateOrUpdateWebsite'
       WebsiteName: 'LT Foto'
-      WebsitePhysicalPath: 'X:\SystemDrive$\inetpub\wwwroot'
+      WebsitePhysicalPath: 'C:\inetpub\wwwroot'
       WebsiteAuthUserName: 'adminuser'
       WebsiteAuthUserPassword: 'Welcome@1234'
 
