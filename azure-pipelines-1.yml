@@ -29,13 +29,13 @@ steps:
       pathToPublish: '$(Build.ArtifactStagingDirectory)/html-site'
       artifactName: 'html-site'
 
-  # Step 4: Deploy the files to the Azure VM using WinRM
+  # Step 4: Deploy the files to the Azure VM using SMB (Fixing the Path Issue)
   - task: WindowsMachineFileCopy@2
     inputs:
-      SourcePath: '$(Build.ArtifactStagingDirectory)/html-site'
-      MachineNames: '172.190.137.198'  # Replace with your VM's Private IP if needed
+      SourcePath: 'C:\agents\_work\1\a\html-site'  # ✅ Correct source path
+      MachineNames: '172.190.137.198'  # Use your VM's Private IP if needed
       AdminUserName: 'adminuser'
       AdminPassword: 'Welcome@1234'
-      TargetPath: 'winrm://172.190.137.198'  # ✅ Using WinRM instead of SMB
+      TargetPath: '\\172.190.137.198\C$\inetpub\wwwroot'  # ✅ Copy to IIS
       cleanTargetBeforeCopy: true  # Clears old files before copying new ones
       Overwrite: true
