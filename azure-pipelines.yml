@@ -16,19 +16,15 @@ steps:
       WebsiteAuthUserName: 'adminuser'
       WebsiteAuthUserPassword: 'Welcome@1234'
 
-  # Step 2: Publish the HTML site as an artifact
+  # Step 2: Copy HTML files to the staging directory
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: '$(Build.SourcesDirectory)'  # Copy the HTML files
+      Contents: '**'  # Copy everything inside the folder
+      TargetFolder: '$(Build.ArtifactStagingDirectory)/html-site'
+
+  # Step 3: Publish the HTML site as an artifact
   - task: PublishBuildArtifacts@1
     inputs:
-      pathToPublish: '$(Build.ArtifactStagingDirectory)/'
+      pathToPublish: '$(Build.ArtifactStagingDirectory)/html-site'
       artifactName: 'html-site'
-
-  # Step 3: Copy the HTML files to the Azure VM (DEPLOYMENT)
-  - task: WindowsMachineFileCopy@2
-    inputs:
-      SourcePath: '$(Build.ArtifactStagingDirectory)/html-site'
-      MachineNames: '172.190.137.198'
-      AdminUserName: 'adminuser'
-      AdminPassword: 'Welcome@1234'
-      TargetPath: 'C:\inetpub\wwwroot\'
-      cleanTargetBeforeCopy: true  # Clears old files before copying new ones
-      Overwrite: true
