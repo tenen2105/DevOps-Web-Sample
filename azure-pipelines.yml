@@ -1,10 +1,11 @@
 trigger:
-  - main  # This runs the pipeline whenever changes are pushed to main
+  - main  # Runs the pipeline when code is pushed
 
 pool:
   name: Azure-VM-Pipeline  # Use your self-hosted agent
 
 steps:
+  # Step 1: Set up IIS and create the website
   - task: IISWebAppManagementOnMachineGroup@0
     inputs:
       EnableIIS: true
@@ -15,7 +16,19 @@ steps:
       WebsiteAuthUserName: 'adminuser'
       WebsiteAuthUserPassword: 'Welcome@1234'
 
+  # Step 2: Publish the HTML site as an artifact
   - task: PublishBuildArtifacts@1
     inputs:
-      pathToPublish: '$(Build.SourcesDirectory)'  # Ensure HTML files are uploaded
+      pathToPublish: '$(Build.SourcesDirectory)/'
       artifactName: 'html-site'
+
+  # Step 3: Copy the HTML files to the Azure VM (DEPLOYMENT)
+  - task: WindowsMachineFileCopy@2
+    inputs:
+      SourcePath: '$(Build.ArtifactStagingDirectory)/html-site'
+      MachineNames: '172.190.137.198'
+      AdminUserName: 'adminuser'
+      AdminPassword: 'Welcome@1234'
+      TargetPath: 'C:\inetpub\wwwroot\'
+      cleanTargetBeforeCopy: true  # Clears old files before copying new ones
+      Overwrite: true
