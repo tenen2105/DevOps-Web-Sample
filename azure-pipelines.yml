@@ -5,7 +5,17 @@ pool:
   name: Azure-VM-Pipeline  # Use your self-hosted agent
 
 steps:
+  - task: IISWebAppManagementOnMachineGroup@0
+    inputs:
+      EnableIIS: true
+      IISDeploymentType: 'IISWebsite'
+      ActionIISWebsite: 'CreateOrUpdateWebsite'
+      WebsiteName: 'LT Foto'
+      WebsitePhysicalPath: 'X:\SystemDrive$\inetpub\wwwroot'
+      WebsiteAuthUserName: 'adminuser'
+      WebsiteAuthUserPassword: 'Welcome@1234'
+
   - task: PublishBuildArtifacts@1
     inputs:
-      pathToPublish: '$(Build.SourcesDirectory)'  # Upload all HTML files
+      pathToPublish: '$(Build.SourcesDirectory)'  # Ensure HTML files are uploaded
       artifactName: 'html-site'
